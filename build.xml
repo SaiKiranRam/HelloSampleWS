@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="HelloWS" default="war">
+
+	<property name="src.dir"     value="src"/>
+
+    <property name="bin.dir"   value="bin"/>
+    <property name="classes.dir" value="${bin.dir}/classes"/>
+    <property name="jar.dir"     value="${bin.dir}/jar"/>
+	
+	<target name="clean">
+		<delete dir="${bin.dir}"/>
+    </target>
+	
+	<target name="compile" depends="clean">
+		<mkdir dir="${classes.dir}"/>
+		<javac srcdir="${src.dir}" destdir="${classes.dir}"/>
+    </target>
+	
+	<!--target name="import" depends="init">
+		<mkdir dir="bin/classes" />
+		<exec executable="wsimport">
+			<arg value="-keep" />
+			<arg value="-s" />
+			<arg path="src" />
+			<arg value="-d" />
+			<arg path="bin/classes" />
+			<arg path="C:\Users\rsaikiran\Desktop\DXC\SHD Learning\Webservice creation\WsimportSample\WebContent\wsdl" />
+		</exec>
+	</target-->
+
+	<target name="jar" depends="compile">
+		<mkdir dir="bin/lib" />
+		<jar basedir="bin/classes" jarfile="bin/lib/${ant.project.name}.jar" />
+	</target>
+
+	<target name="war" depends="jar">
+		<!-- Compile implementation class -->
+		<!--javac srcdir="src\com\source\port" destdir="bin/classes" debug="true" fork="true" memoryinitialsize="512m" memorymaximumsize="1024m">
+			<classpath>
+				<pathelement location="bin/lib/Calc.jar" />
+			</classpath>
+		</javac-->
+
+		<!-- Create web service war file -->
+		<war destfile="bin/lib/${ant.project.name}.war" webxml="web.xml"  includesfile="Hello.wsdl">
+			<fileset dir="." includes="bin/classes/com,
+						Hello.wsdl">
+			</fileset>
+			<classes dir="bin/classes" />
+			<lib dir="bin/lib" />
+		</war>
+	</target>
+
+</project>

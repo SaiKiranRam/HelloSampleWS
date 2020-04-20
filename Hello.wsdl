@@ -1,0 +1,36 @@
+<definitions xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://jaxws.ws.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://jaxws.ws.com/" name="WebServiceImplService">
+<types>
+<xsd:schema>
+<xsd:import namespace="http://jaxws.ws.com/" schemaLocation="http://localhost:8888/webservice/helloworld?xsd=1"/>
+</xsd:schema>
+</types>
+<message name="getHelloWorldAsString">
+<part name="parameters" element="tns:getHelloWorldAsString"/>
+</message>
+<message name="getHelloWorldAsStringResponse">
+<part name="parameters" element="tns:getHelloWorldAsStringResponse"/>
+</message>
+<portType name="WebServiceInterface">
+<operation name="getHelloWorldAsString">
+<input wsam:Action="http://jaxws.ws.com/WebServiceInterface/getHelloWorldAsStringRequest" message="tns:getHelloWorldAsString"/>
+<output wsam:Action="http://jaxws.ws.com/WebServiceInterface/getHelloWorldAsStringResponse" message="tns:getHelloWorldAsStringResponse"/>
+</operation>
+</portType>
+<binding name="WebServiceImplPortBinding" type="tns:WebServiceInterface">
+<soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+<operation name="getHelloWorldAsString">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+</binding>
+<service name="WebServiceImplService">
+<port name="WebServiceImplPort" binding="tns:WebServiceImplPortBinding">
+<soap:address location="http://localhost:8888/webservice/helloworld"/>
+</port>
+</service>
+</definitions>
